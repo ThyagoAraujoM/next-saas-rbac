@@ -4,6 +4,7 @@
   "private": true,
   "license": "MIT",
   "files": [
-    "librarty.json"
+    "librarty.json",
+    "node.json"
   ]
 }
