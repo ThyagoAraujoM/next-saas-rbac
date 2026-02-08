@@ -13,10 +13,10 @@
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "npm@11.6.2",
+  "packageManager": "pnpm@10.29.1",
   "workspaces": [
     "apps/*",
     "packages/*",
-    "config/*" 
+    "config/*"
   ]
 }
