@@ -1,9 +1,4 @@
-import {
-  createMongoAbility,
-  type CreateAbility,
-  type MongoAbility,
-  AbilityBuilder,
-} from '@casl/ability'
+import { createMongoAbility, type CreateAbility, type MongoAbility, AbilityBuilder } from '@casl/ability'
 import type { User } from './models/user'
 import { permissions } from './permissions'
 import { userSubject } from './subjects/user'
@@ -17,8 +12,7 @@ import { billingSubject } from './subjects/billing'
 export * from './models/organization'
 export * from './models/project'
 export * from './models/user'
-
-// type AppAbilities = UserSubject | ProjectSubject | ['manage', 'all']
+export * from './roles'
 
 const appAbilitySchema = z.union([
   projectSubject,
