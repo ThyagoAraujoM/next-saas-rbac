@@ -1,8 +1,9 @@
 import { prisma } from '@/lib/prisma'
 import { compare } from 'bcryptjs'
 import type { FastifyInstance } from 'fastify'
-import type { ZodTypeProvider } from 'fastify-type-provider-zod'
+import { type ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
+import { BadRequestError } from '../_errors/bad-request-error'
 
 export async function authenticateWithPassword(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -12,19 +13,17 @@ export async function authenticateWithPassword(app: FastifyInstance) {
         tags: ['Auth'],
         summary: 'Authenticate with email and password',
         body: z.object({
-          email: z.email(),
-          password: z.string(),
+          email: z.email({ error: 'Email is required.' }),
+          password: z.string({ error: 'Password is required.' }),
         }),
         response: {
-          401: z.object({
-            message: z.string(),
-          }),
           201: z.object({
             token: z.string(),
           }),
         },
       },
     },
+
     async (request, reply) => {
       const { email, password } = request.body
       const userFromEmail = await prisma.user.findUnique({
@@ -32,13 +31,11 @@ export async function authenticateWithPassword(app: FastifyInstance) {
       })
 
       if (!userFromEmail) {
-        return reply.status(401).send({ message: 'Invalid credentials.' })
+        throw new BadRequestError('Invalid credentials.')
       }
 
       if (userFromEmail.passwordHash === null) {
-        return reply
-          .status(401)
-          .send({ message: 'User does not have a password, use social login.' })
+        throw new BadRequestError('Invalid credentials.')
       }
 
       const isPasswordValid = await compare(
@@ -47,7 +44,7 @@ export async function authenticateWithPassword(app: FastifyInstance) {
       )
 
       if (!isPasswordValid) {
-        return reply.status(401).send({ message: 'Invalid credentials.' })
+        throw new BadRequestError('Invalid credentials.')
       }
 
       const token = await reply.jwtSign(
