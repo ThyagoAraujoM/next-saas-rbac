@@ -3,7 +3,7 @@
 /** @type {PrettierConfig} */
 const config = {
   plugins: [import("prettier-plugin-tailwindcss")],
-  printWidth: 80,
+  printWidth: 160,
   tabWidth: 2,
   useTabs: false,
   semi: false,

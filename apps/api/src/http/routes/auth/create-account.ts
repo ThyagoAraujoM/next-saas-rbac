@@ -15,9 +15,7 @@ export async function createAccount(app: FastifyInstance) {
         body: z.object({
           name: z.string({ error: 'Name is required.' }),
           email: z.email({ error: 'Email is required.' }),
-          password: z
-            .string({ error: 'Password is required.' })
-            .min(6, { error: 'Password must be at least 6 characters long.' }),
+          password: z.string({ error: 'Password is required.' }).min(6, { error: 'Password must be at least 6 characters long.' }),
         }),
         response: {
           201: z.object({
@@ -51,9 +49,7 @@ export async function createAccount(app: FastifyInstance) {
           name,
           email,
           passwordHash,
-          member_on: autoJoinOrganization
-            ? { create: { organizationId: autoJoinOrganization.id } }
-            : undefined,
+          member_on: autoJoinOrganization ? { create: { organizationId: autoJoinOrganization.id } } : undefined,
         },
       })
 

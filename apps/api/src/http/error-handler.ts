@@ -3,10 +3,7 @@ import z, { ZodError } from 'zod/v3'
 import { BadRequestError } from './routes/_errors/bad-request-error'
 import { extractZodError, isFastifyError } from './routes/_errors/helper'
 import { UnauthorizedError } from './routes/_errors/unauthorized-error'
-import {
-  hasZodFastifySchemaValidationErrors,
-  isResponseSerializationError,
-} from 'fastify-type-provider-zod'
+import { hasZodFastifySchemaValidationErrors, isResponseSerializationError } from 'fastify-type-provider-zod'
 
 type FastifyErrorHandler = FastifyInstance['errorHandler']
 

@@ -3,12 +3,7 @@ import { fastify } from 'fastify'
 import fastifySwagger from '@fastify/swagger'
 import fastifyJwt from '@fastify/jwt'
 import fastifySwaggerUi from '@fastify/swagger-ui'
-import {
-  jsonSchemaTransform,
-  serializerCompiler,
-  validatorCompiler,
-  ZodTypeProvider,
-} from 'fastify-type-provider-zod'
+import { jsonSchemaTransform, serializerCompiler, validatorCompiler, ZodTypeProvider } from 'fastify-type-provider-zod'
 
 import { createAccount } from './routes/auth/create-account'
 import { authenticateWithPassword } from './routes/auth/authenticate-with-password'
@@ -16,6 +11,7 @@ import { getProfile } from './routes/auth/get-profile'
 import { errorHandler } from './error-handler'
 import { RequestPasswordRecovery } from './routes/auth/request-password-recovery'
 import { ResetPassword } from './routes/auth/reset-password'
+import { authenticateWithGithub } from './routes/auth/authenticate-with-github'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -32,8 +28,7 @@ app.register(fastifySwagger, {
   openapi: {
     info: {
       title: 'Next.js SaaS',
-      description:
-        'Full-stack SaaS boilerplate built with Next.js, Multi-tenant, RBAC, Fastify, Prisma, and more.',
+      description: 'Full-stack SaaS boilerplate built with Next.js, Multi-tenant, RBAC, Fastify, Prisma, and more.',
       version: '1.0.0',
     },
     servers: [],
@@ -51,6 +46,7 @@ app.register(authenticateWithPassword)
 app.register(getProfile)
 app.register(RequestPasswordRecovery)
 app.register(ResetPassword)
+app.register(authenticateWithGithub)
 
 app.listen({ port: 3000 }).then(() => {
   console.log('HTTP server running!')
