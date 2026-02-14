@@ -1,15 +1,17 @@
 import fastifyCors from '@fastify/cors'
 import { fastify } from 'fastify'
 import fastifySwagger from '@fastify/swagger'
-
+import fastifyJwt from '@fastify/jwt'
+import fastifySwaggerUi from '@fastify/swagger-ui'
 import {
   jsonSchemaTransform,
   serializerCompiler,
   validatorCompiler,
   ZodTypeProvider,
 } from 'fastify-type-provider-zod'
+
 import { createAccount } from './routes/auth/create-account'
-import fastifySwaggerUi from '@fastify/swagger-ui'
+import { authenticateWithPassword } from './routes/auth/authenticate-with-password'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -33,8 +35,13 @@ app.register(fastifySwaggerUi, {
   routePrefix: '/docs',
 })
 
+app.register(fastifyJwt, {
+  secret: 'my-jwt-secret',
+})
+
 app.register(fastifyCors)
 app.register(createAccount)
+app.register(authenticateWithPassword)
 
 app.listen({ port: 3000 }).then(() => {
   console.log('HTTP server running!')
