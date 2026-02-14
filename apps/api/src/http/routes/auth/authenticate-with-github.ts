@@ -6,6 +6,7 @@ import { METHODS } from 'node:http'
 import { access } from 'node:fs'
 import { BadRequestError } from '../_errors/bad-request-error'
 import { prisma } from '@/lib/prisma'
+import { env } from '@saas/env'
 
 export async function authenticateWithGithub(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -75,9 +76,9 @@ async function exchangeCodeForAccessToken(code: string): Promise<any> {
   try {
     const githubOAuthUrl = new URL('https://github.com/login/oauth/access_token')
 
-    githubOAuthUrl.searchParams.set('client_id', process.env.GITHUB_CLIENT_ID!)
-    githubOAuthUrl.searchParams.set('client_secret', process.env.GITHUB_CLIENT_SECRET!)
-    githubOAuthUrl.searchParams.set('redirect_uri', process.env.GITHUB_CALLBACK_URL!)
+    githubOAuthUrl.searchParams.set('client_id', env.GITHUB_OAUTH_CLIENT_ID!)
+    githubOAuthUrl.searchParams.set('client_secret', env.GITHUB_OAUTH_CLIENT_SECRET!)
+    githubOAuthUrl.searchParams.set('redirect_uri', env.GITHUB_OAUTH_REDIRECT_URI!)
 
     githubOAuthUrl.searchParams.set('code', code)
 

@@ -12,6 +12,7 @@ import { errorHandler } from './error-handler'
 import { RequestPasswordRecovery } from './routes/auth/request-password-recovery'
 import { ResetPassword } from './routes/auth/reset-password'
 import { authenticateWithGithub } from './routes/auth/authenticate-with-github'
+import { env } from '@saas/env'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -19,7 +20,7 @@ app.setSerializerCompiler(serializerCompiler)
 app.setValidatorCompiler(validatorCompiler)
 
 app.register(fastifyJwt, {
-  secret: 'my-jwt-secret',
+  secret: env.JWT_SECRET,
 })
 
 app.setErrorHandler(errorHandler)
@@ -32,6 +33,15 @@ app.register(fastifySwagger, {
       version: '1.0.0',
     },
     servers: [],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
   },
   transform: jsonSchemaTransform,
 })
@@ -48,6 +58,6 @@ app.register(RequestPasswordRecovery)
 app.register(ResetPassword)
 app.register(authenticateWithGithub)
 
-app.listen({ port: 3000 }).then(() => {
+app.listen({ port: env.SERVER_PORT }).then(() => {
   console.log('HTTP server running!')
 })
