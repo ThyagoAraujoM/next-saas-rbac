@@ -13,9 +13,11 @@ export async function createAccount(app: FastifyInstance) {
         tags: ['Auth'],
         summary: 'Create a new user account',
         body: z.object({
-          name: z.string(),
-          email: z.email(),
-          password: z.string().min(6),
+          name: z.string({ error: 'Name is required.' }),
+          email: z.email({ error: 'Email is required.' }),
+          password: z
+            .string({ error: 'Password is required.' })
+            .min(6, { error: 'Password must be at least 6 characters long.' }),
         }),
         response: {
           201: z.object({
