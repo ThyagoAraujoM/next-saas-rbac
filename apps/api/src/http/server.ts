@@ -33,6 +33,7 @@ import { createInvite } from './routes/invites/create-invite'
 import { getInvites } from './routes/invites/get-invites'
 import { acceptInvite } from './routes/invites/accept-invite'
 import { rejectInvite } from './routes/invites/reject-invites'
+import { revokeInvite } from './routes/invites/revoke-invite'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -101,6 +102,7 @@ app.register(getInvite)
 app.register(getInvites)
 app.register(acceptInvite)
 app.register(rejectInvite)
+app.register(revokeInvite)
 
 app.listen({ port: env.SERVER_PORT }).then(() => {
   console.log('HTTP server running!')
