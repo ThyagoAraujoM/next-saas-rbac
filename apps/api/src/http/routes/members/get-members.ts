@@ -3,9 +3,9 @@ import { prisma } from '@/lib/prisma'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
-import { BadRequestError } from '../_errors/bad-request-error'
 import { getUserPermission } from '@/utils/get-user-permisseions'
 import { roleSchema } from '@saas/auth'
+import { UnauthorizedError } from '../_errors/unauthorized-error'
 
 export async function getMembers(app: FastifyInstance) {
   app
@@ -13,7 +13,6 @@ export async function getMembers(app: FastifyInstance) {
     .register(auth)
     .get(
       '/organization/:slug/members',
-
       {
         schema: {
           tags: ['Members'],
@@ -45,7 +44,7 @@ export async function getMembers(app: FastifyInstance) {
 
         const { cannot } = getUserPermission(userId, membership.role)
         if (cannot('get', 'User')) {
-          throw new BadRequestError(`You're not allowed to view members of this organization`)
+          throw new UnauthorizedError(`You're not allowed to view members of this organization`)
         }
 
         const members = await prisma.member.findMany({
