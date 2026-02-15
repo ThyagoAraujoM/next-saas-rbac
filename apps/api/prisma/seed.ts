@@ -17,6 +17,8 @@ async function seed() {
   await prisma.project.deleteMany()
   await prisma.member.deleteMany()
   await prisma.organization.deleteMany()
+  await prisma.token.deleteMany()
+  await prisma.account.deleteMany()
   await prisma.user.deleteMany()
 
   const passwordHash = await hash('12345', 1)
@@ -58,39 +60,21 @@ async function seed() {
         createMany: {
           data: [
             {
-              ownerId: faker.helpers.arrayElement([
-                user.id,
-                anotherUser.id,
-                anotherUser2.id,
-              ]),
+              ownerId: faker.helpers.arrayElement([user.id, anotherUser.id, anotherUser2.id]),
               name: faker.commerce.productName(),
-              slug: faker.helpers
-                .slugify(faker.commerce.productName())
-                .toLocaleLowerCase(),
+              slug: faker.helpers.slugify(faker.commerce.productName()).toLocaleLowerCase(),
               description: faker.commerce.productDescription(),
             },
             {
-              ownerId: faker.helpers.arrayElement([
-                user.id,
-                anotherUser.id,
-                anotherUser2.id,
-              ]),
+              ownerId: faker.helpers.arrayElement([user.id, anotherUser.id, anotherUser2.id]),
               name: faker.commerce.productName(),
-              slug: faker.helpers
-                .slugify(faker.commerce.productName())
-                .toLocaleLowerCase(),
+              slug: faker.helpers.slugify(faker.commerce.productName()).toLocaleLowerCase(),
               description: faker.commerce.productDescription(),
             },
             {
-              ownerId: faker.helpers.arrayElement([
-                user.id,
-                anotherUser.id,
-                anotherUser2.id,
-              ]),
+              ownerId: faker.helpers.arrayElement([user.id, anotherUser.id, anotherUser2.id]),
               name: faker.commerce.productName(),
-              slug: faker.helpers
-                .slugify(faker.commerce.productName())
-                .toLocaleLowerCase(),
+              slug: faker.helpers.slugify(faker.commerce.productName()).toLocaleLowerCase(),
               description: faker.commerce.productDescription(),
             },
           ],
@@ -127,39 +111,21 @@ async function seed() {
         createMany: {
           data: [
             {
-              ownerId: faker.helpers.arrayElement([
-                user.id,
-                anotherUser.id,
-                anotherUser2.id,
-              ]),
+              ownerId: faker.helpers.arrayElement([user.id, anotherUser.id, anotherUser2.id]),
               name: faker.commerce.productName(),
-              slug: faker.helpers
-                .slugify(faker.commerce.productName())
-                .toLocaleLowerCase(),
+              slug: faker.helpers.slugify(faker.commerce.productName()).toLocaleLowerCase(),
               description: faker.commerce.productDescription(),
             },
             {
-              ownerId: faker.helpers.arrayElement([
-                user.id,
-                anotherUser.id,
-                anotherUser2.id,
-              ]),
+              ownerId: faker.helpers.arrayElement([user.id, anotherUser.id, anotherUser2.id]),
               name: faker.commerce.productName(),
-              slug: faker.helpers
-                .slugify(faker.commerce.productName())
-                .toLocaleLowerCase(),
+              slug: faker.helpers.slugify(faker.commerce.productName()).toLocaleLowerCase(),
               description: faker.commerce.productDescription(),
             },
             {
-              ownerId: faker.helpers.arrayElement([
-                user.id,
-                anotherUser.id,
-                anotherUser2.id,
-              ]),
+              ownerId: faker.helpers.arrayElement([user.id, anotherUser.id, anotherUser2.id]),
               name: faker.commerce.productName(),
-              slug: faker.helpers
-                .slugify(faker.commerce.productName())
-                .toLocaleLowerCase(),
+              slug: faker.helpers.slugify(faker.commerce.productName()).toLocaleLowerCase(),
               description: faker.commerce.productDescription(),
             },
           ],
@@ -194,39 +160,21 @@ async function seed() {
         createMany: {
           data: [
             {
-              ownerId: faker.helpers.arrayElement([
-                user.id,
-                anotherUser.id,
-                anotherUser2.id,
-              ]),
+              ownerId: faker.helpers.arrayElement([user.id, anotherUser.id, anotherUser2.id]),
               name: faker.commerce.productName(),
-              slug: faker.helpers
-                .slugify(faker.commerce.productName())
-                .toLocaleLowerCase(),
+              slug: faker.helpers.slugify(faker.commerce.productName()).toLocaleLowerCase(),
               description: faker.commerce.productDescription(),
             },
             {
-              ownerId: faker.helpers.arrayElement([
-                user.id,
-                anotherUser.id,
-                anotherUser2.id,
-              ]),
+              ownerId: faker.helpers.arrayElement([user.id, anotherUser.id, anotherUser2.id]),
               name: faker.commerce.productName(),
-              slug: faker.helpers
-                .slugify(faker.commerce.productName())
-                .toLocaleLowerCase(),
+              slug: faker.helpers.slugify(faker.commerce.productName()).toLocaleLowerCase(),
               description: faker.commerce.productDescription(),
             },
             {
-              ownerId: faker.helpers.arrayElement([
-                user.id,
-                anotherUser.id,
-                anotherUser2.id,
-              ]),
+              ownerId: faker.helpers.arrayElement([user.id, anotherUser.id, anotherUser2.id]),
               name: faker.commerce.productName(),
-              slug: faker.helpers
-                .slugify(faker.commerce.productName())
-                .toLocaleLowerCase(),
+              slug: faker.helpers.slugify(faker.commerce.productName()).toLocaleLowerCase(),
               description: faker.commerce.productDescription(),
             },
           ],

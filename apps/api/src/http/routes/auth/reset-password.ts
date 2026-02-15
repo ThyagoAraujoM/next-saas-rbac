@@ -41,6 +41,9 @@ export async function ResetPassword(app: FastifyInstance) {
         data: { passwordHash },
       })
 
+      await prisma.token.deleteMany({
+        where: { userId: tokenFromCode.userId, type: 'PASSWORD_RECOVER' },
+      })
       return reply.status(204).send(null)
     }
   )
