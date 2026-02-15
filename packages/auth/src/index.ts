@@ -42,6 +42,9 @@ export function defineAbilityFor(user: User) {
       return subject.__typename
     },
   })
+  // Bind the methods (this..) to the ability instance to ensure the correct context when they are called outside of the ability instance (e.g., when destructured).
+  ability.can = ability.can.bind(ability)
+  ability.cannot = ability.cannot.bind(ability)
 
   return ability
 }
