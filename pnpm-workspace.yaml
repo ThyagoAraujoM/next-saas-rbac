@@ -2,3 +2,6 @@ packages:
   - "apps/*"
   - "packages/*"
   - "config/*"
+  - 'config/eslint-config'  # Explícito
+  - 'config/prettier'        # Explícito  
+  - 'config/typescript-config' # Explícito

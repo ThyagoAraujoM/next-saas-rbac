@@ -2,10 +2,12 @@
   "name": "@saas/eslint-config",
   "version": "0.0.0",
   "private": true,
+  "main": "base.js",
   "exports": {
     "./base": "./base.js",
-    "./next-js": "./next.js",
-    "./node": "./node.js"
+    "./next": "./next.js",
+    "./node": "./node.js",
+    "./libraty": "./library.js"
   },
   "devDependencies": {
     "@rocketseat/eslint-config": "^2.2.2",
