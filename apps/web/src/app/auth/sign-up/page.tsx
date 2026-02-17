@@ -1,11 +1,11 @@
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 import Image from 'next/image'
 
-import githubIcon from '@/assets/github-svgrepo-com.svg'
+import githubIcon from '@/src/assets/github-svgrepo-com.svg'
+import { Label } from '@/src/components/ui/label'
+import { Input } from '@/src/components/ui/input'
+import { Button } from '@/src/components/ui/button'
+import { Separator } from '@/src/components/ui/separator'
 
 export default function SignUpPage() {
   return (
