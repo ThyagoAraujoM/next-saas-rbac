@@ -10,7 +10,7 @@ import { env } from '@saas/env'
 
 export async function authenticateWithGithub(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
-    '/session/github',
+    '/sessions/github',
     {
       schema: {
         tags: ['Auth'],
