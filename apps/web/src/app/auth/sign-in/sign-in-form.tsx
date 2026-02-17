@@ -13,6 +13,7 @@ import { Button } from '@/src/components/ui/button'
 import { Separator } from '@/src/components/ui/separator'
 import { useFormState } from '@/src/hooks/use-form-state'
 import { useEffect } from 'react'
+import { signInWithGithub } from '../actions'
 
 export function SignInForm() {
   const { handleSubmit, isPedding, formState } = useFormState({
@@ -58,7 +59,7 @@ export function SignInForm() {
 
       <Separator />
 
-      <Button type="submit" variant={'outline'} className="w-full">
+      <Button onClick={signInWithGithub} type="button" variant={'outline'} className="w-full">
         <Image src={githubIcon} className="size-4 dark:invert" alt="" />
         Sign in with GitHub
       </Button>
