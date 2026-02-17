@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
-import { Loader2 } from 'lucide-react'
+import { AlertTriangle, Loader2 } from 'lucide-react'
 
 import { Separator } from '@/components/ui/separator'
 
@@ -13,20 +13,33 @@ import { Label } from '@/components/ui/label'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useActionState } from 'react'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
 export function SignInForm() {
-  const [state, formAction, isPedding] = useActionState(signInWithEmailAndPassword, null)
+  const [{ success, message, errors }, formAction, isPedding] = useActionState(signInWithEmailAndPassword, { success: false, message: null, errors: null })
 
   return (
     <form action={formAction} className="space-y-4">
+      {success === false && message && (
+        <Alert variant="destructive">
+          <AlertTriangle className="size-4"></AlertTriangle>
+          <AlertTitle>Sign in failed!</AlertTitle>
+          <AlertDescription>
+            <p>{message}</p>
+          </AlertDescription>
+        </Alert>
+      )}
+
       <div className="space-y-1">
         <Label htmlFor="email">E-mail</Label>
         <Input name="email" type="email" id="email" placeholder="Digite seu e-mail" />
+        {errors?.email?.errors && <p className="text-sm font-medium text-red-500 dark:text-red-400">{errors.email.errors[0]}</p>}
       </div>
 
       <div className="space-y-1">
         <Label htmlFor="password">Password</Label>
         <Input name="password" type="password" id="password" placeholder="Digite sua senha" />
+        {errors?.password?.errors && <p className="text-sm font-medium text-red-500 dark:text-red-400">{errors.password.errors[0]}</p>}
 
         <Link href={'/auth/forgot-password'} className="hover:underling text-foreground text-xs font-medium">
           Forgot your password?
