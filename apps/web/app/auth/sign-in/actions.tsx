@@ -30,8 +30,8 @@ export async function signInWithEmailAndPassword(_: any, data: FormData) {
 
     console.log(error)
 
-    return { success: false, message: 'Something went wrong', errors: null }
+    return { success: false, message: 'Something went wrong', errors: null, formData: { email, password } }
   }
 
-  return { success: true, message: null, errors: null }
+  return { success: true, message: null, errors: null, formData: { email, password } }
 }
