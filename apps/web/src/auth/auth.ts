@@ -8,10 +8,6 @@ export async function isAuthenticated() {
 }
 
 export async function auth() {
-  if (!(await isAuthenticated())) {
-    redirect('/auth/sign-in')
-  }
-
   try {
     const { user } = await getProfile()
     return { user }
