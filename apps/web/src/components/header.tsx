@@ -5,6 +5,8 @@ import { OrganizationSwitcher } from './organization-switcher'
 import { Slash } from 'lucide-react'
 import Link from 'next/link'
 import { ability } from '../auth/auth'
+import { Separator } from './ui/separator'
+import { ThemeSwitcher } from './theme/theme.switcher'
 
 export default async function Header() {
   const permissions = await ability()
@@ -23,7 +25,9 @@ export default async function Header() {
       </div>
 
       <div className="flex items-center gap-4">
-        <ProfileButton></ProfileButton>
+        <ThemeSwitcher />
+        <Separator orientation="vertical" className="h-5" />
+        <ProfileButton />
       </div>
     </div>
   )
