@@ -12,8 +12,8 @@ export function ThemeSwitcher() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant={'ghost'} size={'icon'}>
-          {resolvedTheme == 'light' && <Sun className="size-4" />}
-          {resolvedTheme == 'dark' && <Moon className="size-4" />}
+          <Sun className="block size-4 dark:hidden" />
+          <Moon className="hidden size-4 dark:block" />
           <span className="sr-only">Toogle theme</span>
         </Button>
       </DropdownMenuTrigger>
