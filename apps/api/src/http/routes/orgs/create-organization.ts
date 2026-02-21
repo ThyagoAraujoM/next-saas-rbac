@@ -11,7 +11,7 @@ export async function createOrganization(app: FastifyInstance) {
     .withTypeProvider<ZodTypeProvider>()
     .register(auth)
     .post(
-      '/organization',
+      '/organizations',
       {
         schema: {
           tags: ['Organizations'],
@@ -19,7 +19,7 @@ export async function createOrganization(app: FastifyInstance) {
           security: [{ bearerAuth: [] }],
           body: z.object({
             name: z.string(),
-            domain: z.string().nullish(),
+            domain: z.string().trim().min(1, 'Domain cannot be empty').nullish(),
             shouldAttachUsersByDomain: z.boolean().optional(),
           }),
           response: {
@@ -32,6 +32,16 @@ export async function createOrganization(app: FastifyInstance) {
       async (request, reply) => {
         const userId = await request.getCurrentUserId()
         const { name, domain, shouldAttachUsersByDomain } = request.body
+
+        const organizationWithSameName = await prisma.organization.findFirst({
+          where: {
+            slug: createSlug(name),
+          },
+        })
+
+        if (organizationWithSameName) {
+          throw new BadRequestError('An organization with the same name already exists')
+        }
 
         if (domain) {
           const organizationWithSameDomain = await prisma.organization.findFirst({
@@ -49,7 +59,7 @@ export async function createOrganization(app: FastifyInstance) {
           data: {
             name,
             slug: createSlug(name),
-            domain,
+            domain: domain ? domain : null,
             shouldAttachUsersByDomain,
             ownerId: userId,
             members: {
