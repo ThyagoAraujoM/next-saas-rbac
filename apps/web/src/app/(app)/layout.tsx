@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import '../globals.css'
 import { isAuthenticated } from '@/src/auth/auth'
 import { redirect } from 'next/navigation'
+import Header from '@/src/components/header'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -18,5 +19,10 @@ export default function RootLayout({
     redirect('/auth/sign-in')
   }
 
-  return <>{children}</>
+  return (
+    <div className="space-y-4 py-4">
+      <Header />
+      <main className="mx-auto w-full max-w-300">{children}</main>
+    </div>
+  )
 }
