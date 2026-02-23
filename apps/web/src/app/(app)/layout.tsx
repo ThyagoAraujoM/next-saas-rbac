@@ -12,10 +12,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-  teste,
+  sheet,
 }: Readonly<{
   children: React.ReactNode;
-  teste: React.ReactNode;
+  sheet: React.ReactNode;
 }>) {
   if (!isAuthenticated()) {
     redirect('/auth/sign-in');
@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <div>
       {children}
-      {teste}
+      {sheet}
     </div>
   );
 }
