@@ -1,24 +1,24 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
-import Image from 'next/image'
+import Link from 'next/link';
+import Image from 'next/image';
 
-import githubIcon from '@/src/assets/github-svgrepo-com.svg'
-import { Label } from '@/src/components/ui/label'
-import { Input } from '@/src/components/ui/input'
-import { Button } from '@/src/components/ui/button'
-import { Separator } from '@/src/components/ui/separator'
-import { useFormState } from '@/src/hooks/use-form-state'
-import { AlertTriangle, Loader2 } from 'lucide-react'
-import { Alert, AlertDescription, AlertTitle } from '@/src/components/ui/alert'
-import { signUpAction } from './actions'
-import { signInWithGithub } from '../actions'
+import githubIcon from '@/src/assets/github-svgrepo-com.svg';
+import { Label } from '@/src/components/ui/label';
+import { Input } from '@/src/components/ui/input';
+import { Button } from '@/src/components/ui/button';
+import { Separator } from '@/src/components/ui/separator';
+import { useFormState } from '@/src/hooks/use-form-state';
+import { AlertTriangle, Loader2 } from 'lucide-react';
+import { Alert, AlertDescription, AlertTitle } from '@/src/components/ui/alert';
+import { signUpAction } from './actions';
+import { signInWithGithub } from '../actions';
 
 export default function SignUpForm() {
   const { handleSubmit, isPedding, formState } = useFormState({
     action: signUpAction,
     initialState: { success: false, message: null, errors: null },
-  })
+  });
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -73,5 +73,5 @@ export default function SignUpForm() {
         Sign Up with GitHub
       </Button>
     </form>
-  )
+  );
 }

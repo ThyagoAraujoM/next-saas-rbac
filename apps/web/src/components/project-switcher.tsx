@@ -1,3 +1,5 @@
+'use client';
+
 import { ChevronsUpDown, PlusCircle } from 'lucide-react';
 import {
   DropdownMenu,
@@ -8,22 +10,28 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu';
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+
 import Link from 'next/link';
-import { getOrganizations } from '../http/get-organizations';
-import { cookies } from 'next/headers';
+import { useParams } from 'next/navigation';
+import { use } from 'react';
+import { getProjects } from '../http/get-projects';
+import { useQuery } from '@tanstack/react-query';
 
-export async function OrganizationSwitcher() {
-  const currentOrg = (await cookies()).get('org')?.value;
+export default function ProjectSwitcher() {
+  const { slug: orgSlug } = useParams<{ slug: string }>();
 
-  const { organizations } = await getOrganizations();
+  const { data, isLoading } = useQuery({
+    queryKey: [orgSlug, 'projects'],
+    queryFn: () => getProjects(orgSlug),
+    enabled: !!orgSlug,
+  });
 
-  const currentOrganization = organizations.find((organization) => organization.slug === currentOrg);
-
+  console.log(data);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="focus-visible:ring-primary flex w-42 items-center gap-2 rounded p-1 text-sm font-medium outline-none focus-visible:ring-2">
-        {currentOrganization ? (
+        {
+          /* {currentOrganization ? (
           <>
             <Avatar className="mr-2 size-4">
               <AvatarImage src={currentOrganization.avatarUrl ?? ''} />
@@ -31,15 +39,16 @@ export async function OrganizationSwitcher() {
             </Avatar>
             <span className="truncate text-left">{currentOrganization.name}</span>
           </>
-        ) : (
-          <span className="text-muted-foreground">Select organization</span>
-        )}
+        ) : (*/
+          <span className="text-muted-foreground">Select projects</span>
+          //)}
+        }
         <ChevronsUpDown className="text-muted-foreground ml-auto size-4" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" alignOffset={-16} sideOffset={12} className="w-50">
         <DropdownMenuGroup>
-          <DropdownMenuLabel>Organizations</DropdownMenuLabel>
-          {organizations.map((organization) => {
+          <DropdownMenuLabel>Projects</DropdownMenuLabel>
+          {/* {organizations.map((organization) => {
             return (
               <DropdownMenuItem key={organization.id} asChild>
                 <Link href={`/org/${organization.slug}`}>
@@ -51,7 +60,7 @@ export async function OrganizationSwitcher() {
                 </Link>
               </DropdownMenuItem>
             );
-          })}
+          })} */}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>

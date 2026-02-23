@@ -1,15 +1,16 @@
-import Image from 'next/image'
-import Logo from '../assets/logo.svg'
-import { ProfileButton } from './profile-button'
-import { OrganizationSwitcher } from './organization-switcher'
-import { Slash } from 'lucide-react'
-import Link from 'next/link'
-import { ability } from '../auth/auth'
-import { Separator } from './ui/separator'
-import { ThemeSwitcher } from './theme/theme.switcher'
+import Image from 'next/image';
+import Logo from '../assets/logo.svg';
+import { ProfileButton } from './profile-button';
+import { OrganizationSwitcher } from './organization-switcher';
+import { Slash } from 'lucide-react';
+import Link from 'next/link';
+import { ability } from '../auth/auth';
+import { Separator } from './ui/separator';
+import { ThemeSwitcher } from './theme/theme.switcher';
+import ProjectSwitcher from './project-switcher';
 
 export default async function Header() {
-  const permissions = await ability()
+  const permissions = await ability();
 
   return (
     <div className="mx-auto flex max-w-300 items-center justify-between border-b pb-2">
@@ -21,7 +22,12 @@ export default async function Header() {
 
         <OrganizationSwitcher />
 
-        {permissions?.can('get', 'Project') && <p>Projetos</p>}
+        {permissions?.can('get', 'Project') && (
+          <>
+            <Slash className="text-border size-3 -rotate-24" />
+            <ProjectSwitcher />
+          </>
+        )}
       </div>
 
       <div className="flex items-center gap-4">
@@ -30,5 +36,5 @@ export default async function Header() {
         <ProfileButton />
       </div>
     </div>
-  )
+  );
 }
