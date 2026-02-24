@@ -20,9 +20,13 @@ export async function getCurrentMembership() {
     return null
   }
 
-  const { membership } = await getMembership(org)
-
-  return membership
+  try {
+    const { membership } = await getMembership(org)
+    return membership
+  } catch (error: any) {
+    console.log(error.message)
+    redirect('/')
+  }
 }
 
 export async function ability() {

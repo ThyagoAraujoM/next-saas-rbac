@@ -46,9 +46,6 @@ export async function signInWithEmailAndPassword(_: any, data: FormData) {
       const { message } = await error.response.json()
       return { success: false, message, errors: null }
     }
-
-    console.log(error)
-
     return { success: false, message: 'Something went wrong', errors: null }
   }
 

@@ -1,9 +1,9 @@
-'use server';
+'use server'
 
-import { createOrganization } from '@/src/http/create-organization';
-import { extractErrorMessage, extractFieldErrors } from '@/src/lib/error-utils';
-import { redirect } from 'next/navigation';
-import z from 'zod';
+import { createOrganization } from '@/src/http/create-organization'
+import { extractFieldErrors } from '@/src/lib/error-utils'
+import { redirect } from 'next/navigation'
+import z from 'zod'
 
 const organizationSchema = z
   .object({
@@ -14,11 +14,11 @@ const organizationSchema = z
       .refine(
         (value) => {
           if (value) {
-            const domainRegex = /^(?!-)(?:[a-zA-Z0-9-]{1,63}(?<!-)\.)+(?:[a-zA-Z]{2,})$/;
+            const domainRegex = /^(?!-)(?:[a-zA-Z0-9-]{1,63}(?<!-)\.)+(?:[a-zA-Z]{2,})$/
 
-            return domainRegex.test(value);
+            return domainRegex.test(value)
           }
-          return true;
+          return true
         },
         { error: 'Invalid domain format' }
       ),
@@ -30,52 +30,50 @@ const organizationSchema = z
   .refine(
     (data) => {
       if (data.shouldAttachUsersByDomain === true && !data.domain) {
-        return false;
+        return false
       }
-      return true;
+      return true
     },
     {
       message: 'Domain is required when attaching users by domain',
       path: ['domain'],
     }
-  );
+  )
 
 export async function createOrganizationAction(_: any, data: FormData) {
-  const validationSchema = organizationSchema.safeParse(Object.fromEntries(data));
+  const validationSchema = organizationSchema.safeParse(Object.fromEntries(data))
 
   if (!validationSchema.success) {
-    const treeifiedErrors = z.treeifyError(validationSchema.error);
-    const errors = treeifiedErrors.properties;
+    const treeifiedErrors = z.treeifyError(validationSchema.error)
+    const errors = treeifiedErrors.properties
     if (!errors) {
-      return { success: false, message: null, errors: null };
+      return { success: false, message: null, errors: null }
     }
 
     const flattenedErrors = Object.entries(errors).reduce(
       (acc, [key, value]) => {
-        acc[key] = value.errors;
-        return acc;
+        acc[key] = value.errors
+        return acc
       },
       {} as Record<string, string[]>
-    );
+    )
 
-    return { success: false, message: null, errors: flattenedErrors };
+    return { success: false, message: null, errors: flattenedErrors }
   }
 
-  const { name, domain, shouldAttachUsersByDomain } = validationSchema.data;
+  const { name, domain, shouldAttachUsersByDomain } = validationSchema.data
 
   try {
-    await createOrganization({ name, domain: domain ? domain : null, shouldAttachUsersByDomain });
+    await createOrganization({ name, domain: domain ? domain : null, shouldAttachUsersByDomain })
   } catch (error: any) {
-    const message = extractErrorMessage(error);
-    const fieldErrors = extractFieldErrors(error);
-
+    const { message, errors } = await error.response.json()
     return {
       success: false,
-      message,
-      errors: fieldErrors,
-    };
+      message: message,
+      errors: errors,
+    }
   }
 
-  return { success: true, message: 'Successfully saved an organization', errors: null };
-  redirect('/');
+  return { success: true, message: 'Successfully saved an organization', errors: null }
+  redirect('/')
 }

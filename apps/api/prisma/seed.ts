@@ -1,27 +1,27 @@
-import 'dotenv/config'
-import { PrismaClient } from '../src/generated/prisma/client'
-import { PrismaPg } from '@prisma/adapter-pg'
-import { faker } from '@faker-js/faker'
-import { hash } from 'bcryptjs'
+import 'dotenv/config';
+import { PrismaClient } from '../src/generated/prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
+import { faker } from '@faker-js/faker';
+import { hash } from 'bcryptjs';
 
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL,
-})
+});
 
 const prisma = new PrismaClient({
   log: ['query', 'error', 'warn', 'info'],
   adapter,
-})
+});
 
 async function seed() {
-  await prisma.project.deleteMany()
-  await prisma.member.deleteMany()
-  await prisma.organization.deleteMany()
-  await prisma.token.deleteMany()
-  await prisma.account.deleteMany()
-  await prisma.user.deleteMany()
+  await prisma.project.deleteMany();
+  await prisma.member.deleteMany();
+  await prisma.organization.deleteMany();
+  await prisma.token.deleteMany();
+  await prisma.account.deleteMany();
+  await prisma.user.deleteMany();
 
-  const passwordHash = await hash('12345', 1)
+  const passwordHash = await hash('12345', 1);
   const user = await prisma.user.create({
     data: {
       name: 'Jhon Doe',
@@ -29,7 +29,7 @@ async function seed() {
       avatarUrl: faker.image.avatarGitHub(),
       passwordHash,
     },
-  })
+  });
 
   const anotherUser = await prisma.user.create({
     data: {
@@ -38,7 +38,7 @@ async function seed() {
       avatarUrl: faker.image.avatarGitHub(),
       passwordHash,
     },
-  })
+  });
   const anotherUser2 = await prisma.user.create({
     data: {
       name: faker.person.fullName(),
@@ -46,7 +46,7 @@ async function seed() {
       avatarUrl: faker.image.avatarGitHub(),
       passwordHash,
     },
-  })
+  });
 
   await prisma.organization.create({
     data: {
@@ -62,18 +62,21 @@ async function seed() {
             {
               ownerId: faker.helpers.arrayElement([user.id, anotherUser.id, anotherUser2.id]),
               name: faker.commerce.productName(),
+              avatarUrl: faker.image.avatarGitHub(),
               slug: faker.helpers.slugify(faker.commerce.productName()).toLocaleLowerCase(),
               description: faker.commerce.productDescription(),
             },
             {
               ownerId: faker.helpers.arrayElement([user.id, anotherUser.id, anotherUser2.id]),
               name: faker.commerce.productName(),
+              avatarUrl: faker.image.avatarGitHub(),
               slug: faker.helpers.slugify(faker.commerce.productName()).toLocaleLowerCase(),
               description: faker.commerce.productDescription(),
             },
             {
               ownerId: faker.helpers.arrayElement([user.id, anotherUser.id, anotherUser2.id]),
               name: faker.commerce.productName(),
+              avatarUrl: faker.image.avatarGitHub(),
               slug: faker.helpers.slugify(faker.commerce.productName()).toLocaleLowerCase(),
               description: faker.commerce.productDescription(),
             },
@@ -99,7 +102,7 @@ async function seed() {
         },
       },
     },
-  })
+  });
 
   await prisma.organization.create({
     data: {
@@ -113,18 +116,21 @@ async function seed() {
             {
               ownerId: faker.helpers.arrayElement([user.id, anotherUser.id, anotherUser2.id]),
               name: faker.commerce.productName(),
+              avatarUrl: faker.image.avatarGitHub(),
               slug: faker.helpers.slugify(faker.commerce.productName()).toLocaleLowerCase(),
               description: faker.commerce.productDescription(),
             },
             {
               ownerId: faker.helpers.arrayElement([user.id, anotherUser.id, anotherUser2.id]),
               name: faker.commerce.productName(),
+              avatarUrl: faker.image.avatarGitHub(),
               slug: faker.helpers.slugify(faker.commerce.productName()).toLocaleLowerCase(),
               description: faker.commerce.productDescription(),
             },
             {
               ownerId: faker.helpers.arrayElement([user.id, anotherUser.id, anotherUser2.id]),
               name: faker.commerce.productName(),
+              avatarUrl: faker.image.avatarGitHub(),
               slug: faker.helpers.slugify(faker.commerce.productName()).toLocaleLowerCase(),
               description: faker.commerce.productDescription(),
             },
@@ -148,7 +154,7 @@ async function seed() {
         ],
       },
     },
-  })
+  });
 
   await prisma.organization.create({
     data: {
@@ -162,18 +168,21 @@ async function seed() {
             {
               ownerId: faker.helpers.arrayElement([user.id, anotherUser.id, anotherUser2.id]),
               name: faker.commerce.productName(),
+              avatarUrl: faker.image.avatarGitHub(),
               slug: faker.helpers.slugify(faker.commerce.productName()).toLocaleLowerCase(),
               description: faker.commerce.productDescription(),
             },
             {
               ownerId: faker.helpers.arrayElement([user.id, anotherUser.id, anotherUser2.id]),
               name: faker.commerce.productName(),
+              avatarUrl: faker.image.avatarGitHub(),
               slug: faker.helpers.slugify(faker.commerce.productName()).toLocaleLowerCase(),
               description: faker.commerce.productDescription(),
             },
             {
               ownerId: faker.helpers.arrayElement([user.id, anotherUser.id, anotherUser2.id]),
               name: faker.commerce.productName(),
+              avatarUrl: faker.image.avatarGitHub(),
               slug: faker.helpers.slugify(faker.commerce.productName()).toLocaleLowerCase(),
               description: faker.commerce.productDescription(),
             },
@@ -199,9 +208,9 @@ async function seed() {
         },
       },
     },
-  })
+  });
 }
 
 seed().then(() => {
-  console.log('Seeding completed successfully.')
-})
+  console.log('Seeding completed successfully.');
+});

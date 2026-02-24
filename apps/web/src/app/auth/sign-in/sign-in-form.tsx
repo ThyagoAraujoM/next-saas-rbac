@@ -35,13 +35,13 @@ export function SignInForm() {
       <div className="space-y-1">
         <Label htmlFor="email">E-mail</Label>
         <Input name="email" type="email" id="email" placeholder="Digite seu e-mail" />
-        {formState.errors?.email && <p className="text-sm font-medium text-red-500 dark:text-red-400">{formState.errors.email[0]}</p>}
+        {formState.errors?.email && <p className="text-sm font-medium text-red-500 dark:text-red-400">{formState.errors.email}</p>}
       </div>
 
       <div className="space-y-1">
         <Label htmlFor="password">Password</Label>
         <Input name="password" type="password" id="password" placeholder="Digite sua senha" />
-        {formState.errors?.password && <p className="text-sm font-medium text-red-500 dark:text-red-400">{formState.errors.password[0]}</p>}
+        {formState.errors?.password && <p className="text-sm font-medium text-red-500 dark:text-red-400">{formState.errors.password}</p>}
 
         <Link href={'/auth/forgot-password'} className="hover:underling text-foreground text-xs font-medium">
           Forgot your password?

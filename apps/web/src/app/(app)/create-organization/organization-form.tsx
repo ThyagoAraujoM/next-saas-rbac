@@ -1,19 +1,19 @@
-'use client';
+'use client'
 
-import { Checkbox } from '@/src/components/ui/checkbox';
-import { Button } from '@/src/components/ui/button';
-import { Input } from '@/src/components/ui/input';
-import { Label } from '@/src/components/ui/label';
-import { useFormState } from '@/src/hooks/use-form-state';
-import { createOrganizationAction } from './actions';
-import { Alert, AlertDescription, AlertTitle } from '@/src/components/ui/alert';
-import { AlertTriangle, Loader2 } from 'lucide-react';
+import { Checkbox } from '@/src/components/ui/checkbox'
+import { Button } from '@/src/components/ui/button'
+import { Input } from '@/src/components/ui/input'
+import { Label } from '@/src/components/ui/label'
+import { useFormState } from '@/src/hooks/use-form-state'
+import { createOrganizationAction } from './actions'
+import { Alert, AlertDescription, AlertTitle } from '@/src/components/ui/alert'
+import { AlertTriangle, Loader2 } from 'lucide-react'
 
 export default function OrganizationForm() {
   const { handleSubmit, isPedding, formState } = useFormState({
     action: createOrganizationAction,
     initialState: { success: false, message: null, errors: null },
-  });
+  })
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -40,13 +40,13 @@ export default function OrganizationForm() {
       <div className="space-y-1">
         <Label htmlFor="name">Oganizarion name</Label>
         <Input name="name" id="name" placeholder="Enter your organization name" />
-        {formState.errors?.name && <p className="text-sm font-medium text-red-500 dark:text-red-400">{formState.errors.name[0]}</p>}
+        {formState.errors?.name && <p className="text-sm font-medium text-red-500 dark:text-red-400">{formState.errors.name}</p>}
       </div>
 
       <div className="space-y-1">
         <Label htmlFor="domain">E-mail domain</Label>
         <Input name="domain" type="text" id="domain" placeholder="example.com" inputMode="url" />
-        {formState.errors?.domain && <p className="text-sm font-medium text-red-500 dark:text-red-400">{formState.errors.domain[0]}</p>}
+        {formState.errors?.domain && <p className="text-sm font-medium text-red-500 dark:text-red-400">{formState.errors.domain}</p>}
       </div>
 
       <div className="space-y-1">
@@ -57,7 +57,7 @@ export default function OrganizationForm() {
             <p className="text-muted-foreground text-sm">This will automatically invite all members with same e-mail domain to this organization.</p>
           </label>
           {formState.errors?.shouldAttachUsersByDomain && (
-            <p className="text-sm font-medium text-red-500 dark:text-red-400">{formState.errors.shouldAttachUsersByDomain[0]}</p>
+            <p className="text-sm font-medium text-red-500 dark:text-red-400">{formState.errors.shouldAttachUsersByDomain}</p>
           )}
         </div>
       </div>
@@ -66,5 +66,5 @@ export default function OrganizationForm() {
         {isPedding ? <Loader2 className="size-4 animate-spin" /> : ' Save organization'}
       </Button>
     </form>
-  );
+  )
 }

@@ -11,7 +11,7 @@ export const errorHandler: FastifyErrorHandler = (error, request, reply) => {
   if (hasZodFastifySchemaValidationErrors(error)) {
     return reply.status(400).send({
       message: 'Validation error',
-      error: extractZodError(error),
+      errors: extractZodError(error),
     })
   }
 

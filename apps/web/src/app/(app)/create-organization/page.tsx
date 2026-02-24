@@ -1,5 +1,5 @@
-import Header from '@/src/components/header';
-import OrganizationForm from './organization-form';
+import Header from '@/src/components/header'
+import OrganizationForm from './organization-form'
 
 export default function CreateOrganizationPage() {
   return (
@@ -7,10 +7,8 @@ export default function CreateOrganizationPage() {
       <Header />
       <main className="mx-auto w-full max-w-300 space-y-4">
         <h1 className="text-2xl font-bold">Create Organization</h1>
-        {/* onSubmit={handleSubmit} */}
-
         <OrganizationForm />
       </main>
     </div>
-  );
+  )
 }
