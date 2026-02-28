@@ -37,7 +37,7 @@ export async function createProjectAction(_: any, data: FormData) {
     await createProject({ org: (await getCurrentOrg()) as string, name, description })
   } catch (error: any) {
     const { message, errors } = await error.response.json()
-    console.log(message, errors)
+
     return {
       success: false,
       message: message,
