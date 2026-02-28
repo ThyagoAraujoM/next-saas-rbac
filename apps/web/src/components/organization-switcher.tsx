@@ -1,4 +1,4 @@
-import { ChevronsUpDown, PlusCircle } from 'lucide-react';
+import { ChevronsUpDown, PlusCircle } from 'lucide-react'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,25 +7,25 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from './ui/dropdown-menu';
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
-import Link from 'next/link';
-import { getOrganizations } from '../http/get-organizations';
-import { cookies } from 'next/headers';
+} from './ui/dropdown-menu'
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
+import Link from 'next/link'
+import { getOrganizations } from '../http/get-organizations'
+import { cookies } from 'next/headers'
 
 export async function OrganizationSwitcher() {
-  const currentOrg = (await cookies()).get('org')?.value;
+  const currentOrg = (await cookies()).get('org')?.value
 
-  const { organizations } = await getOrganizations();
+  const { organizations } = await getOrganizations()
 
-  const currentOrganization = organizations.find((organization) => organization.slug === currentOrg);
+  const currentOrganization = organizations.find((organization) => organization.slug === currentOrg)
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="focus-visible:ring-primary flex w-42 items-center gap-2 rounded p-1 text-sm font-medium outline-none focus-visible:ring-2">
         {currentOrganization ? (
           <>
-            <Avatar className="mr-2 size-4">
+            <Avatar className="size-4">
               <AvatarImage src={currentOrganization.avatarUrl ?? ''} />
               <AvatarFallback />
             </Avatar>
@@ -50,7 +50,7 @@ export async function OrganizationSwitcher() {
                   <span className="line-clamp-1">{organization.name}</span>
                 </Link>
               </DropdownMenuItem>
-            );
+            )
           })}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
@@ -62,5 +62,5 @@ export async function OrganizationSwitcher() {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  )
 }
