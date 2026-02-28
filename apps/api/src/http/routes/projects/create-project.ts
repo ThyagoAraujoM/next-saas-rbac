@@ -45,6 +45,17 @@ export async function createProject(app: FastifyInstance) {
 
         const { name, description } = request.body
 
+        const projectWithSameSlug = await prisma.project.findFirst({
+          where: {
+            slug: createSlug(name),
+            organizationId: organization.id,
+          },
+        })
+
+        if (projectWithSameSlug) {
+          throw new BadRequestError('An project with the same name already exists')
+        }
+
         const project = await prisma.project.create({
           data: {
             name,

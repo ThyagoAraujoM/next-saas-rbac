@@ -9,7 +9,7 @@ export async function isAuthenticated() {
   return !!ck.get('token')?.value
 }
 
-export async function getCurrentOrg() {
+export async function getCurrentOrg(): Promise<string | null> {
   return (await cookies()).get('org')?.value ?? null
 }
 
