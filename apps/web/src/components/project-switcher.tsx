@@ -16,7 +16,7 @@ import { useParams } from 'next/navigation'
 import { getProjects } from '../http/get-projects'
 import { useQuery } from '@tanstack/react-query'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
-import { Skeleton } from './skeleton'
+import { Skeleton } from './ui/skeleton'
 
 export default function ProjectSwitcher() {
   const { slug: orgSlug, project: projectSlug } = useParams<{ slug: string; project: string }>()
