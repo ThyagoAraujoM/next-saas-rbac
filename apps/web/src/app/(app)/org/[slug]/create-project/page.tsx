@@ -1,7 +1,17 @@
+import { ability, getCurrentOrg } from '@/src/auth/auth'
 import ProjectForm from './project-form'
 import Header from '@/src/components/header'
+import { redirect } from 'next/navigation'
 
-export default function CreateProjectPage() {
+export default async function CreateProjectPage() {
+  const permissions = await ability()
+
+  if (permissions?.cannot('create', 'Project')) {
+    const org = await getCurrentOrg()
+    if (org) redirect(`/org/${org}`)
+    redirect('/')
+  }
+
   return (
     <div className="space-y-4 py-4">
       <Header />
