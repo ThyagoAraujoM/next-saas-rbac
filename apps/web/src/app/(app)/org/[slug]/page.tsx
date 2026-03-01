@@ -1,9 +1,9 @@
-import Header from '@/src/components/header';
+import Header from '@/src/components/header'
 
 export default async function Projects() {
   return (
-    <div className="py-4">
-      <Header></Header>
+    <div className="space-y-4">
+      <h1 className="text-2xl font-bold">Projects</h1>
     </div>
-  );
+  )
 }

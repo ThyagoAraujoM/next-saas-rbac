@@ -2,9 +2,8 @@ import Header from '@/src/components/header'
 
 export default function Project() {
   return (
-    <div className="py-4">
-      <Header></Header>
-      <main className="mx-auto w-full max-w-300 space-y-4">Projects</main>
+    <div className="space-y-4">
+      <h1 className="text-2xl font-bold">Project</h1>
     </div>
   )
 }
