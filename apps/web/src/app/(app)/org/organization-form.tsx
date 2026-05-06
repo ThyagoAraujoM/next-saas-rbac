@@ -5,7 +5,7 @@ import { Button } from '@/src/components/ui/button'
 import { Input } from '@/src/components/ui/input'
 import { Label } from '@/src/components/ui/label'
 import { useFormState } from '@/src/hooks/use-form-state'
-import { createOrganizationAction } from './actions'
+import { createOrganizationAction } from '../create-organization/actions'
 import { Alert, AlertDescription, AlertTitle } from '@/src/components/ui/alert'
 import { AlertTriangle, Loader2 } from 'lucide-react'
 

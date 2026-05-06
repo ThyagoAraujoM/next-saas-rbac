@@ -1,6 +1,6 @@
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/src/components/ui/sheet';
-import OrganizationForm from '../../create-organization/organization-form';
-import { InterceptedSheetContent } from '@/src/components/intercepted-sheet-content';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/src/components/ui/sheet'
+import OrganizationForm from '../../org/organization-form'
+import { InterceptedSheetContent } from '@/src/components/intercepted-sheet-content'
 
 export default function CreateOrganizationPage() {
   return (
@@ -14,5 +14,5 @@ export default function CreateOrganizationPage() {
         </div>
       </InterceptedSheetContent>
     </Sheet>
-  );
+  )
 }

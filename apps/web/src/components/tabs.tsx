@@ -9,6 +9,7 @@ export async function Tabs() {
 
   const canUpdateOrganization = permissions?.can('update', 'Organization')
   const canGetBilling = permissions?.can('get', 'Billing')
+  
   const canGetMembers = permissions?.can('get', 'User')
   const canGetProjects = permissions?.can('get', 'Project')
 
@@ -23,12 +24,12 @@ export async function Tabs() {
 
         {canGetMembers && (
           <Button asChild variant="ghost" size="sm" className="text-muted-foreground data-[current=true]:text-foreground data-[current=true]:border">
-            <NavLink href={`org/${currentOrg}/members`}>Members</NavLink>
+            <NavLink href={`/org/${currentOrg}/members`}>Members</NavLink>
           </Button>
         )}
         {(canGetBilling || canUpdateOrganization) && (
           <Button asChild variant="ghost" size="sm" className="text-muted-foreground data-[current=true]:text-foreground data-[current=true]:border">
-            <NavLink href={`org/${currentOrg}/settings`}>Settings & Billing</NavLink>
+            <NavLink href={`/org/${currentOrg}/settings`}>Settings & Billing</NavLink>
           </Button>
         )}
       </nav>
