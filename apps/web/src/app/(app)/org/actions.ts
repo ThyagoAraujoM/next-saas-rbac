@@ -1,9 +1,11 @@
 'use server'
 
+import { getCurrentOrg } from '@/src/auth/auth'
 import { createOrganization } from '@/src/http/create-organization'
-import { extractFieldErrors } from '@/src/lib/error-utils'
+import { updateOrganization } from '@/src/http/update-organization'
 import { redirect } from 'next/navigation'
 import z from 'zod'
+import { revalidateTag } from 'next/cache'
 
 const organizationSchema = z
   .object({
@@ -40,6 +42,8 @@ const organizationSchema = z
     }
   )
 
+export type OrganizationSchema = z.infer<typeof organizationSchema>
+
 export async function createOrganizationAction(_: any, data: FormData) {
   const validationSchema = organizationSchema.safeParse(Object.fromEntries(data))
 
@@ -65,6 +69,49 @@ export async function createOrganizationAction(_: any, data: FormData) {
 
   try {
     await createOrganization({ name, domain: domain ? domain : null, shouldAttachUsersByDomain })
+
+    revalidateTag('organizations', 'max')
+  } catch (error: any) {
+    const { message, errors } = await error.response.json()
+    return {
+      success: false,
+      message: message,
+      errors: errors,
+    }
+  }
+
+  return { success: true, message: 'Successfully saved an organization', errors: null }
+  redirect('/')
+}
+
+export async function updateOrganizationAction(_: any, data: FormData) {
+  const currentOrg = await getCurrentOrg()
+  const validationSchema = organizationSchema.safeParse(Object.fromEntries(data))
+
+  if (!validationSchema.success) {
+    const treeifiedErrors = z.treeifyError(validationSchema.error)
+    const errors = treeifiedErrors.properties
+    if (!errors) {
+      return { success: false, message: null, errors: null }
+    }
+
+    const flattenedErrors = Object.entries(errors).reduce(
+      (acc, [key, value]) => {
+        acc[key] = value.errors
+        return acc
+      },
+      {} as Record<string, string[]>
+    )
+
+    return { success: false, message: null, errors: flattenedErrors }
+  }
+
+  const { name, domain, shouldAttachUsersByDomain } = validationSchema.data
+
+  try {
+    await updateOrganization({ org: currentOrg!, name, domain: domain ? domain : null, shouldAttachUsersByDomain })
+
+    revalidateTag('organizations', 'max')
   } catch (error: any) {
     const { message, errors } = await error.response.json()
     return {

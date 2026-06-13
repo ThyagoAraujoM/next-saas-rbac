@@ -5,13 +5,20 @@ import { Button } from '@/src/components/ui/button'
 import { Input } from '@/src/components/ui/input'
 import { Label } from '@/src/components/ui/label'
 import { useFormState } from '@/src/hooks/use-form-state'
-import { createOrganizationAction } from '../create-organization/actions'
+import { createOrganizationAction, updateOrganizationAction, type OrganizationSchema } from './actions'
 import { Alert, AlertDescription, AlertTitle } from '@/src/components/ui/alert'
 import { AlertTriangle, Loader2 } from 'lucide-react'
 
-export default function OrganizationForm() {
+interface OrganizationFormProps {
+  isUpdating?: boolean
+  initialData?: OrganizationSchema
+}
+
+export default function OrganizationForm({ initialData, isUpdating = false }: OrganizationFormProps) {
+  const formAction = isUpdating ? updateOrganizationAction : createOrganizationAction
+
   const { handleSubmit, isPedding, formState } = useFormState({
-    action: createOrganizationAction,
+    action: formAction,
     initialState: { success: false, message: null, errors: null },
   })
 
@@ -39,19 +46,19 @@ export default function OrganizationForm() {
 
       <div className="space-y-1">
         <Label htmlFor="name">Oganizarion name</Label>
-        <Input name="name" id="name" placeholder="Enter your organization name" />
+        <Input name="name" id="name" placeholder="Enter your organization name" defaultValue={initialData?.name} />
         {formState.errors?.name && <p className="text-sm font-medium text-red-500 dark:text-red-400">{formState.errors.name}</p>}
       </div>
 
       <div className="space-y-1">
         <Label htmlFor="domain">E-mail domain</Label>
-        <Input name="domain" type="text" id="domain" placeholder="example.com" inputMode="url" />
+        <Input name="domain" type="text" id="domain" placeholder="example.com" inputMode="url" defaultValue={initialData?.domain ?? undefined} />
         {formState.errors?.domain && <p className="text-sm font-medium text-red-500 dark:text-red-400">{formState.errors.domain}</p>}
       </div>
 
       <div className="space-y-1">
         <div className="flex items-baseline space-x-2">
-          <Checkbox name="shouldAttachUsersByDomain" id="shouldAttachUsersByDomain" />
+          <Checkbox name="shouldAttachUsersByDomain" id="shouldAttachUsersByDomain" defaultChecked={initialData?.shouldAttachUsersByDomain} />
           <label htmlFor="shouldAttachUsersByDomain" className="space-y-1">
             <span className="text-smfont-medium leading-none">Auth-join new members by their e-mail domain</span>
             <p className="text-muted-foreground text-sm">This will automatically invite all members with same e-mail domain to this organization.</p>
