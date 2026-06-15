@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/src
 import { getOrganization } from '@/src/http/get-organization'
 import OrganizationForm from '../../organization-form'
 import ShutdownOrganizationButton from './shutdown-organization-button'
+import { Billing } from './billing'
 
 export default async function Settings() {
   const currentOrg = await getCurrentOrg()
@@ -29,12 +30,12 @@ export default async function Settings() {
             <CardContent>
               <OrganizationForm
                 isUpdating
-                initialData={{ name: organization.name, domain: organization.domain, shouldAttachUsersByDomain: organization.shouldAttachUsersByDomain, }}
+                initialData={{ name: organization.name, domain: organization.domain, shouldAttachUsersByDomain: organization.shouldAttachUsersByDomain }}
               ></OrganizationForm>
             </CardContent>
           </Card>
         )}
-        {canGetBilling && <h1 className="text-2xl font-bold">Billing</h1>}
+        {canGetBilling && <Billing />}
 
         {canShutdownOrganization && (
           <Card>
