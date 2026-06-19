@@ -29,7 +29,6 @@ export default function ProjectSwitcher() {
 
   const currentProject = data && projectSlug ? data.projects.find((project) => project.slug === projectSlug) : null
 
-  console.log(data)
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="focus-visible:ring-primary flex w-42 items-center gap-2 rounded p-1 text-sm font-medium outline-none focus-visible:ring-2">

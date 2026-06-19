@@ -6,14 +6,13 @@ import { z } from 'zod'
 
 import { getUserPermission } from '@/utils/get-user-permisseions'
 import { UnauthorizedError } from '../_errors/unauthorized-error'
-import { BadRequestError } from '../_errors/bad-request-error'
 
 export async function removeMembers(app: FastifyInstance) {
   app
     .withTypeProvider<ZodTypeProvider>()
     .register(auth)
     .delete(
-      '/organization/:slug/members/:memberId',
+      '/organizations/:slug/members/:memberId',
       {
         schema: {
           tags: ['Members'],
@@ -34,26 +33,15 @@ export async function removeMembers(app: FastifyInstance) {
         const { membership, organization } = await request.getUserMembership(slug)
 
         const { cannot } = getUserPermission(userId, membership.role)
+
         if (cannot('update', 'User')) {
           throw new UnauthorizedError(`You're not allowed to delete this member from this organization`)
         }
 
-        const member = await prisma.member.findUnique({
-          where: {
-            organizationId_userId: {
-              userId: memberId,
-              organizationId: organization.id,
-            },
-          },
-        })
-
-        if (!member) {
-          throw new BadRequestError(`Member not found`)
-        }
-
         await prisma.member.delete({
           where: {
-            id: member.id,
+            id: memberId,
+            organizationId: organization.id,
           },
         })
 
