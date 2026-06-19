@@ -14,7 +14,7 @@ export async function updateMembers(app: FastifyInstance) {
     .withTypeProvider<ZodTypeProvider>()
     .register(auth)
     .put(
-      '/organization/:slug/members/:memberId',
+      '/organizations/:slug/members/:memberId',
       {
         schema: {
           tags: ['Members'],
@@ -44,10 +44,8 @@ export async function updateMembers(app: FastifyInstance) {
 
         const member = await prisma.member.findUnique({
           where: {
-            organizationId_userId: {
-              userId: memberId,
-              organizationId: organization.id,
-            },
+            id: memberId,
+            organizationId: organization.id,
           },
         })
 
