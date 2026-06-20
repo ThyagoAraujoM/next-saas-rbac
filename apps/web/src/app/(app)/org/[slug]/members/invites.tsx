@@ -20,7 +20,7 @@ export async function Invites() {
         </Card>
       )}
       <div className="space-y-2">
-        <h2 className="text-lg font-semibold">Members</h2>
+        <h2 className="text-lg font-semibold">Invites</h2>
         <div className="rounded border">
           <Table>
             <TableBody>
@@ -37,7 +37,11 @@ export async function Invites() {
                   </TableRow>
                 )
               })}
-              {invites.length == 0 && <TableRow className="text-muted-foreground text-center">No invites found</TableRow>}
+              {invites.length == 0 && (
+                <TableRow>
+                  <TableCell className="text-muted-foreground text-center">No invites found</TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </div>
