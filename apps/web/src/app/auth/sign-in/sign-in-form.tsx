@@ -13,8 +13,11 @@ import { Button } from '@/src/components/ui/button'
 import { Separator } from '@/src/components/ui/separator'
 import { useFormState } from '@/src/hooks/use-form-state'
 import { signInWithGithub } from '../actions'
+import { useSearchParams } from 'next/navigation'
 
 export function SignInForm() {
+  const searchParams = useSearchParams()
+
   const { handleSubmit, isPedding, formState } = useFormState({
     action: signInWithEmailAndPassword,
     initialState: { success: false, message: null, errors: null },
@@ -34,7 +37,7 @@ export function SignInForm() {
 
       <div className="space-y-1">
         <Label htmlFor="email">E-mail</Label>
-        <Input name="email" type="email" id="email" placeholder="Digite seu e-mail" />
+        <Input name="email" type="email" id="email" placeholder="Digite seu e-mail" defaultValue={searchParams.get('email') ?? ''} />
         {formState.errors?.email && <p className="text-sm font-medium text-red-500 dark:text-red-400">{formState.errors.email}</p>}
       </div>
 

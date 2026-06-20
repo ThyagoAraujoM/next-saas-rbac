@@ -42,8 +42,6 @@ export async function signUpAction(_: any, data: FormData) {
   try {
     await signUp({ email, password, name })
   } catch (error) {
-    console.log(error)
-
     return { success: false, message: 'Something went wrong', errors: null }
   }
 
