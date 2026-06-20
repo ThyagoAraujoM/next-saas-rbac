@@ -9,9 +9,10 @@ export const config = {
 }
 
 export async function proxy(request: NextRequest) {
-  if (!(await isAuthenticated())) {
-    return NextResponse.redirect(new URL('/auth/sign-in', request.url))
-  }
+  // retirando autenticação global.
+  // if (!(await isAuthenticated())) {
+  //   return NextResponse.redirect(new URL('/auth/sign-in', request.url))
+  // }
   const response = NextResponse.next()
 
   const { pathname } = request.nextUrl
