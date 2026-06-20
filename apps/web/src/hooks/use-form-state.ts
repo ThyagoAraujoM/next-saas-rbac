@@ -34,8 +34,8 @@ export function useFormState({ action, initialState, onSuccess }: useFormStatePr
     const formData = new FormData(event.currentTarget)
     startTransition(() => {
       formAction(formData)
+      requestFormReset(form)
     })
-    requestFormReset(form)
   }
 
   return { handleSubmit, formState, isPedding }
