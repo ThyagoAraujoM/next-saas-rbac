@@ -12,7 +12,7 @@ export async function getInvites(app: FastifyInstance) {
     .withTypeProvider<ZodTypeProvider>()
     .register(auth)
     .get(
-      '/organization/:slug/invites',
+      '/organizations/:slug/invites',
       {
         schema: {
           tags: ['Invites'],
@@ -22,20 +22,22 @@ export async function getInvites(app: FastifyInstance) {
             slug: z.string(),
           }),
           response: {
-            200: z.array(
-              z.object({
-                id: z.uuid(),
-                email: z.email(),
-                role: roleSchema,
-                createdAt: z.date(),
-                author: z
-                  .object({
-                    id: z.uuid(),
-                    name: z.string().nullable(),
-                  })
-                  .nullable(),
-              })
-            ),
+            200: z.object({
+              invites: z.array(
+                z.object({
+                  id: z.uuid(),
+                  email: z.email(),
+                  role: roleSchema,
+                  createdAt: z.date(),
+                  author: z
+                    .object({
+                      id: z.uuid(),
+                      name: z.string().nullable(),
+                    })
+                    .nullable(),
+                })
+              ),
+            }),
           },
         },
       },
@@ -51,6 +53,9 @@ export async function getInvites(app: FastifyInstance) {
         }
 
         const invites = await prisma.invite.findMany({
+          where: {
+            organizationId: organization.id,
+          },
           select: {
             id: true,
             email: true,
@@ -63,15 +68,12 @@ export async function getInvites(app: FastifyInstance) {
               },
             },
           },
-          where: {
-            organizationId: organization.id,
-          },
           orderBy: {
             createdAt: 'desc',
           },
         })
 
-        return reply.status(200).send(invites)
+        return reply.status(200).send({ invites })
       }
     )
 }
