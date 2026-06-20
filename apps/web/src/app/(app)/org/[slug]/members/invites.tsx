@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/src/components/ui/ca
 import { Table, TableBody, TableCell, TableRow } from '@/src/components/ui/table'
 import { getInvites } from '@/src/http/get-invites'
 import { RevokeInviteButton } from './revoke-invite-button'
+import { CreateInviteForm } from './create-invite-form'
 
 export async function Invites() {
   const currentOrg = await getCurrentOrg()
@@ -16,12 +17,14 @@ export async function Invites() {
           <CardHeader>
             <CardTitle>Invite member</CardTitle>
           </CardHeader>
-          <CardContent></CardContent>
+          <CardContent>
+            <CreateInviteForm />
+          </CardContent>
         </Card>
       )}
       <div className="space-y-2">
         <h2 className="text-lg font-semibold">Invites</h2>
-        <div className="rounded border">
+        <div className="rounded border p-1">
           <Table>
             <TableBody>
               {invites?.map((invite) => {
