@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "scripts": {
     "env:load": "dotenv -e ../../.env --",
-    "dev": "pnpm env:load tsx watch src/http/server.ts",
-    "db:studio": "pnpm env:load prisma studio",
-    "db:generate": "pnpm env:load prisma generate",
-    "db:migrate": "pnpm env:load prisma migrate dev",
-    "db:seed": "pnpm env:load prisma db seed",
+    "db:generate": "dotenv -e ../../.env -- prisma generate",
+    "db:migrate": "dotenv -e ../../.env -- prisma migrate dev",
+    "db:studio": "dotenv -e ../../.env -- prisma studio",
+    "db:seed": "dotenv -e ../../.env -- prisma db seed",
+    "dev": "dotenv -e ../../.env -- tsx watch src/http/server.ts",
     "build": "tsup",
     "start": "node dist/http/server.js"
   },
