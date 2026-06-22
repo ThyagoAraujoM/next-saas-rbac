@@ -9,4 +9,9 @@ export default defineConfig({
   clean: true,
   noExternal: ['@saas/auth', '@saas/env'],
   external: ['dotenv'],
+  esbuildOptions(options) {
+    options.alias = {
+      '@': './src', // 👈 resolve o alias @/ para ./src/
+    }
+  },
 })
