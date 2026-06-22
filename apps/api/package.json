@@ -9,7 +9,7 @@
     "db:studio": "dotenv -e ../../.env -- prisma studio",
     "db:seed": "dotenv -e ../../.env -- prisma db seed",
     "dev": "dotenv -e ../../.env -- tsx watch src/http/server.ts",
-    "build": "tsup",
+    "build": "prisma generate && tsup",
     "start": "node dist/http/server.js"
   },
   "dependencies": {
